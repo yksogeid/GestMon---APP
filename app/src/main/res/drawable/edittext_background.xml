@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Estado normal -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/> <!-- Fondo blanco -->
+            <corners android:radius="8dp"/> <!-- Bordes redondeados -->
+            <stroke android:width="2dp" android:color="#CCCCCC"/> <!-- Borde gris claro -->
+        </shape>
+    </item>
+
+    <!-- Estado enfocado (cuando el usuario toca el EditText) -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/>
+            <corners android:radius="8dp"/>
+            <stroke android:width="2dp" android:color="#6200EE"/> <!-- Borde morado -->
+        </shape>
+    </item>
+
+    <!-- Estado de error (opcional, si manejas validaciones) -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/>
+            <corners android:radius="8dp"/>
+            <stroke android:width="2dp" android:color="#FF0000"/> <!-- Borde rojo -->
+        </shape>
+    </item>
+
+</selector>
