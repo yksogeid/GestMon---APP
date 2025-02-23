@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="purple_200">#FF9C27B0</color> <!-- Morado más vibrante -->
+    <color name="purple_500">#FFD500F9</color> <!-- Morado neón -->
+    <color name="purple_700">#FFAA00FF</color> <!-- Morado intenso -->
+    <color name="teal_200">#FF00E5FF</color> <!-- Azul cian vibrante -->
+    <color name="teal_700">#FF00838F</color> <!-- Azul oscuro brillante -->
+    <color name="black">#FF212121</color> <!-- Negro con ligero gris para contraste -->
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#FFFFFF</color> <!-- Verde principal -->
-    <color name="colorPrimaryDark">#FFFFFF</color> <!-- Verde oscuro -->
-    <color name="colorAccent">#224208</color> <!-- Verde claro -->
-    <color name="textColorPrimary">#FFFFFF</color> <!-- Texto blanco -->
-    <color name="textColorSecondary">#757575</color> <!-- Texto gris -->
-    <color name="editTextBackground">#E8F5E9</color> <!-- Fondo claro para EditText -->
+    <color name="colorPrimary">#FFFFFF</color> <!-- Púrpura intenso -->
+    <color name="colorPrimaryDark">#fffafa</color> <!-- Morado oscuro vibrante -->
+    <color name="colorAccent">#399459</color> <!-- Rojo intenso -->
+    <color name="textColorPrimary">#FFFFFFFF</color>
+    <color name="textColorSecondary">#FFB0BEC5</color> <!-- Gris claro más llamativo -->
+    <color name="editTextBackground">#FFC8E6C9</color> <!-- Verde claro con más saturación -->
+    <color name="colorInputs">#7ab48c</color>
+    <color name="lavender">#399459</color> <!-- Lavanda neón -->
 </resources>

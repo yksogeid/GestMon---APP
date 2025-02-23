@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">gestmon</string>
+    <string name="app_name">GestMon - Monitorias Unisimon</string>
     <string name="historial_monitorias_icon">Historial de monitorias</string>
     <string name="ver_monitores_icon">Ver monitores</string>
     <string name="agendar_monitoria_icon">Agendar nueva monitoria</string>

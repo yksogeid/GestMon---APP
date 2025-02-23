@@ -8,7 +8,7 @@
 
     <!-- Estilo para los EditText -->
     <style name="EditTextStyle">
-        <item name="android:background">@drawable/edittext_background</item>
+        <item name="android:background">@color/colorInputs</item>
         <item name="android:textColor">@color/textColorSecondary</item>
         <item name="android:textSize">16sp</item>
         <item name="android:padding">12dp</item>
