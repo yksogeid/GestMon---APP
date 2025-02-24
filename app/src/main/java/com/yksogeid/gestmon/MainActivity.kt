@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var toolbar: Toolbar
+    private lateinit var cardDisponible: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         cardVerMonitores = findViewById(R.id.cardVerMonitores)
         cardHistorialMonitorias = findViewById(R.id.cardHistorialMonitorias)
         cardAgendarMonitoria = findViewById(R.id.cardAgendarMonitoria)
+        cardDisponible = findViewById(R.id.cardDisponible)
 
         // Obtener la vista del header del NavigationView
         val headerView = navigationView.getHeaderView(0)
@@ -118,9 +120,10 @@ class MainActivity : AppCompatActivity() {
         cardVerMonitores.startAnimation(slideUpAnimation)
         cardHistorialMonitorias.startAnimation(slideUpAnimation)
         cardAgendarMonitoria.startAnimation(slideUpAnimation)
+        cardDisponible.startAnimation(slideUpAnimation)
 
-        val scaleUpAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_up)
-        cardAgendarMonitoria.startAnimation(scaleUpAnimation)
+       // val scaleUpAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_up)
+        //cardAgendarMonitoria.startAnimation(scaleUpAnimation)
     }
 
     override fun onSupportNavigateUp(): Boolean {
