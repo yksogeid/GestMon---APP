@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
+    private lateinit var btnRegister: Button
     private lateinit var recuperarClave: TextView
 
 
@@ -38,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
+        btnRegister = findViewById(R.id.btnRegister)
         recuperarClave = findViewById(R.id.tvForgotPassword)
 
         // Aplicar animaciones a los elementos
@@ -51,6 +53,16 @@ class LoginActivity : AppCompatActivity() {
 
             // Validar los campos y procesar el inicio de sesión
             validateAndLogin()
+        }
+        // Configurar el evento de clic en el botón de inicio de sesión
+        btnRegister.setOnClickListener {
+            // Animación de escala al hacer clic
+            val scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up)
+            btnRegister.startAnimation(scaleUp)
+
+            // Redirigir a RegisterActivity
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
         recuperarClave.setOnClickListener {
             recuperarClave.startAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_up))
@@ -66,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
         etEmail.startAnimation(slideInBottom)
         etPassword.startAnimation(slideInBottom)
         btnLogin.startAnimation(slideInBottom)
+        btnRegister.startAnimation(slideInBottom)
     }
 
     /**
@@ -101,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.text = "Cargando..."
 
         // Llamar a la API
-        val call = RetrofitClient.instance.login(LoginRequest(email, password))
+        val call = RetrofitClient.apiService.login(LoginRequest(email, password))
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 btnLogin.isEnabled = true

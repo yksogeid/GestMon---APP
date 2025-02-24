@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FF9C27B0</color> <!-- Morado más vibrante -->
+    <color name="purple_200">#399459</color> <!-- Morado más vibrante -->
     <color name="purple_500">#FFD500F9</color> <!-- Morado neón -->
     <color name="purple_700">#FFAA00FF</color> <!-- Morado intenso -->
     <color name="teal_200">#FF00E5FF</color> <!-- Azul cian vibrante -->
