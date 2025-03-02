@@ -1,11 +1,11 @@
 package com.yksogeid.gestmon
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
@@ -19,6 +19,7 @@ import retrofit2.Response
 import com.yksogeid.gestmon.services.LoginResponse
 import com.yksogeid.gestmon.services.LoginRequest
 import android.util.Log
+import org.json.JSONObject
 
 
 class LoginActivity : AppCompatActivity() {
@@ -155,14 +156,23 @@ class LoginActivity : AppCompatActivity() {
                         ).show()
                     }
                 } else {
-                    val errorBody = response.errorBody()?.string()
+                    val errorBody = response.errorBody()?.use { it.string() } // Cierra el stream automáticamente
                     Log.e("API_ERROR", "Error en la respuesta: $errorBody")
-                    Toast.makeText(
-                        this@LoginActivity,
-                        errorBody ?: "Error en la autenticación.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
+                    val errorMessage = runCatching {
+                        val jsonObject = JSONObject(errorBody ?: "")
+                        jsonObject.optString("message", "Error en la autenticación.") // Obtiene el mensaje o usa el valor por defecto
+                    }.getOrElse {
+                        "Error en la autenticación." // En caso de excepción
+                    }
+
+                    AlertDialog.Builder(this@LoginActivity)                        .setTitle("Error")
+                        .setMessage(errorMessage)
+                        .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                        .show()
                 }
+
+
             }
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 btnLogin.isEnabled = true

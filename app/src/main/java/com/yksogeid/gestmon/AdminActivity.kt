@@ -25,7 +25,9 @@ class AdminActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_admin)
 
         // Inicializar vistas
@@ -124,6 +126,7 @@ class AdminActivity : AppCompatActivity() {
         cardAgendarMonitoria.startAnimation(scaleUpAnimation)
     }
 
+
     private fun mostrarFragmento(fragment: Fragment) {
         cardContainer.visibility = View.GONE // Ocultar las tarjetas
         supportFragmentManager.beginTransaction()
@@ -153,4 +156,5 @@ class AdminActivity : AppCompatActivity() {
             }
         }
     }
+
 }
