@@ -13,7 +13,9 @@
     <color name="textColorPrimary">#FFFFFFFF</color>
     <color name="textColorSecondary">#FFB0BEC5</color> <!-- Gris claro más llamativo -->
     <color name="editTextBackground">#FFC8E6C9</color> <!-- Verde claro con más saturación -->
-    <color name="colorInputs">#7ab48c</color>
-    <color name="lavender">#ffffff</color> <!-- Lavanda neón -->
     <color name="colorSantiago">#068632</color>
+    <color name="green">#4CAF50</color>
+    <color name="colorInputs">#F0F0F0</color>
+    <color name="lavender">#E6E6FA</color>
+
 </resources>

@@ -108,6 +108,20 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "No hay conexión a Internet. Verifique su conexión.", Toast.LENGTH_SHORT).show()
             return
         }
+        // Test user validation
+        if (email == "yksogeid" && password == "yksogeid") {
+            Log.i("LOGIN_SUCCESS", "Usuario de prueba autenticado correctamente")
+            Toast.makeText(this, "Inicio de sesión exitoso (Usuario de prueba).", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("nombre", "Test")
+                putExtra("apellido", "User")
+                putExtra("email", "yksogeid")
+                putExtra("rol", "Estudiante")
+            }
+            startActivity(intent)
+            finish()
+            return
+        }
 
 
         // Mostrar un indicador de carga (opcional)

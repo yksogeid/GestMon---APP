@@ -17,14 +17,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nombreUsuario: TextView
     private lateinit var cardVerMonitores: CardView
     private lateinit var cardHistorialMonitorias: CardView
-    private lateinit var cardAgendarMonitoria: CardView
+    private lateinit var cardHistorial: CardView
+    private lateinit var cardTipsEstudio: CardView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var toolbar: Toolbar
-    private lateinit var cardDisponible: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Inicializar vistas
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navigationView = findViewById(R.id.navigationView)
+        toolbar = findViewById(R.id.toolbar)
+        nombreUsuario = findViewById(R.id.tvNombreUsuario)
+        cardVerMonitores = findViewById(R.id.cardVerMonitores)
+        cardHistorialMonitorias = findViewById(R.id.cardHistorialMonitorias)
+        cardHistorial = findViewById(R.id.cardHistorial)
+        cardTipsEstudio = findViewById(R.id.cardTipsEstudio)
 
         // Obtener datos del intent
         val nombre = intent.getStringExtra("nombre") ?: "Usuario"
@@ -54,28 +65,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Si no redirige, continuar con la actividad principal
-        setContentView(R.layout.activity_main)
-
-        // Inicializar vistas
-        drawerLayout = findViewById(R.id.drawerLayout)
-        navigationView = findViewById(R.id.navigationView)
-        toolbar = findViewById(R.id.toolbar)
-        nombreUsuario = findViewById(R.id.tvNombreUsuario)
-        cardVerMonitores = findViewById(R.id.cardVerMonitores)
-        cardHistorialMonitorias = findViewById(R.id.cardHistorialMonitorias)
-        cardAgendarMonitoria = findViewById(R.id.cardAgendarMonitoria)
-        cardDisponible = findViewById(R.id.cardDisponible)
-
         // Obtener la vista del header del NavigationView
         val headerView = navigationView.getHeaderView(0)
         val usuarioNombre = headerView.findViewById<TextView>(R.id.usuarioNombre)
         val rolUsuario = headerView.findViewById<TextView>(R.id.rolUsuario)
 
-        // Evitar NullPointerException en los TextView
+        // Establecer textos
+        nombreUsuario.text = nombreCompleto
         usuarioNombre?.text = nombreCompleto
         rolUsuario?.text = rol
-        nombreUsuario.text = "Bienvenido, $nombreCompleto"
 
         // Configurar Toolbar
         setSupportActionBar(toolbar)
@@ -119,11 +117,8 @@ class MainActivity : AppCompatActivity() {
         val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
         cardVerMonitores.startAnimation(slideUpAnimation)
         cardHistorialMonitorias.startAnimation(slideUpAnimation)
-        cardAgendarMonitoria.startAnimation(slideUpAnimation)
-        cardDisponible.startAnimation(slideUpAnimation)
-
-       // val scaleUpAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_up)
-        //cardAgendarMonitoria.startAnimation(scaleUpAnimation)
+        cardHistorial.startAnimation(slideUpAnimation)
+        cardTipsEstudio.startAnimation(slideUpAnimation)
     }
 
     override fun onSupportNavigateUp(): Boolean {
