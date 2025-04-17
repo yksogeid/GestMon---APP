@@ -3,6 +3,7 @@ package com.yksogeid.gestmon.services
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 // Datos para el login
@@ -60,4 +61,7 @@ interface ApiService {
 
     @POST("/api/personas")
     fun register(@Body registerRequest: HashMap<String, Any>): Call<Any>
+
+    @POST("api/logout")
+    fun logout(@Header("Authorization") token: String): Call<Any>
 }

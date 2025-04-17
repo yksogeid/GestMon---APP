@@ -11,7 +11,11 @@ import androidx.cardview.widget.CardView
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.widget.Toolbar
+import com.yksogeid.gestmon.services.RetrofitClient
 import com.yksogeid.gestmon.utils.SessionManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
@@ -140,10 +144,47 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_logout -> {
-                    sessionManager.clearSession()
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    Toast.makeText(this, "Has cerrado sesión", Toast.LENGTH_SHORT).show()
-                    finish()
+                    val token = sessionManager.getToken()
+                    val bearerToken = "Bearer $token"
+                    
+                    // Log the API request
+                    Log.d("LogoutAPI", "Calling logout endpoint with token: $bearerToken")
+                    
+                    RetrofitClient.apiService.logout(bearerToken).enqueue(object : Callback<Any> {
+                        override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                            // Log the API response
+                            Log.d("LogoutAPI", "Response Code: ${response.code()}")
+                            Log.d("LogoutAPI", "Response Body: ${response.body()}")
+                            Log.d("LogoutAPI", "Request URL: ${call.request().url()}")
+                            
+                            if (response.isSuccessful) {
+                                val message = "Sesión cerrada exitosamente"
+                                Log.d("LogoutAPI", "Success: $message")
+                                sessionManager.clearSession()
+                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else {
+                                val errorBody = response.errorBody()?.string()
+                                Log.e("LogoutAPI", "Error Response: $errorBody")
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Error al cerrar sesión. Intente nuevamente.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Any>, t: Throwable) {
+                            Log.e("LogoutAPI", "Network Error: ${t.message}")
+                            Log.e("LogoutAPI", "Failed Request: ${call.request().url()}")
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Error de conexión al cerrar sesión",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
                     true
                 }
                 else -> false
