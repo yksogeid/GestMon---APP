@@ -19,6 +19,7 @@ import retrofit2.Response
 import com.yksogeid.gestmon.services.LoginResponse
 import com.yksogeid.gestmon.services.LoginRequest
 import android.util.Log
+import com.yksogeid.gestmon.utils.SessionManager
 import org.json.JSONObject
 
 
@@ -31,10 +32,21 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnRegister: Button
     private lateinit var recuperarClave: TextView
 
+    // Add this at class level
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // Initialize SessionManager
+        sessionManager = SessionManager(this)
+
+        // Check if user is already logged in
+        if (sessionManager.isLoggedIn()) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
         // Inicialización de las vistas
         etEmail = findViewById(R.id.etEmail)
@@ -109,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         // Test user validation
-        if (email == "yksogeid" && password == "yksogeid") {
+        /*if (email == "yksogeid" && password == "yksogeid") {
             Log.i("LOGIN_SUCCESS", "Usuario de prueba autenticado correctamente")
             Toast.makeText(this, "Inicio de sesión exitoso (Usuario de prueba).", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, MainActivity::class.java).apply {
@@ -121,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
             return
-        }
+        }*/
 
 
         // Mostrar un indicador de carga (opcional)
@@ -130,6 +142,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Llamar a la API
         val call = RetrofitClient.apiService.login(LoginRequest(email, password))
+        Log.d("API_CALL", "URL being called: ${call.request().toString()}")
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 btnLogin.isEnabled = true
@@ -140,32 +153,55 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     Log.d("API_RESPONSE", "Respuesta: $loginResponse")
-                    if (loginResponse?.success == true) {
+                    
+                    if (loginResponse != null) {
                         Log.i(
                             "LOGIN_SUCCESS",
-                            "Usuario autenticado correctamente: ${loginResponse.user.nombre}"
+                            "Usuario autenticado correctamente: ${loginResponse.user.username}"
                         )
-                        Toast.makeText(
-                            this@LoginActivity,
-                            "Inicio de sesión exitoso.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
-                            putExtra("nombre", loginResponse.user.nombre)
-                            putExtra("apellido", loginResponse.user.apellido)
-                            putExtra("email", loginResponse.user.email)
-                            putExtra("rol", loginResponse.user.rol)
+                        
+                        // Save session data
+                        sessionManager.saveAuthToken(loginResponse.access_token)
+                        sessionManager.saveUserData(
+                            loginResponse.token_type,
+                            loginResponse.user.persona.nombres,
+                            loginResponse.user.persona.apellidos,
+                            loginResponse.user.persona.email,
+                            loginResponse.user.roles.firstOrNull()?.nombre ?: "Sin rol",
+                            loginResponse.user.username,
+                            loginResponse.user.id
+                        )
+
+                        // Redirect based on role
+                        when (loginResponse.user.roles.firstOrNull()?.nombre) {
+                            "Administrador" -> {
+                                startActivity(Intent(this@LoginActivity, AdminActivity::class.java))
+                            }
+                            "Estudiante Monitor" -> {
+                                startActivity(Intent(this@LoginActivity, MonitorActivity::class.java))
+                            }
+                            "Docente" -> {
+                                startActivity(Intent(this@LoginActivity, TeacherActivity::class.java))
+                            }
+                            "Estudiante" -> {
+                                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            }
+                            else -> {
+                                Toast.makeText(this@LoginActivity, "Rol no reconocido", Toast.LENGTH_SHORT).show()
+                                sessionManager.clearSession()
+                                return
+                            }
                         }
-                        startActivity(intent)
+                        
                         finish()
                     } else {
                         Log.w(
                             "LOGIN_FAILURE",
-                            "Error en la autenticación: ${loginResponse?.message}"
+                            "Error en la autenticación"
                         )
                         Toast.makeText(
                             this@LoginActivity,
-                            loginResponse?.message ?: "Error desconocido.",
+                            "Error en la autenticación",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

@@ -11,9 +11,10 @@ import androidx.cardview.widget.CardView
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.widget.Toolbar
+import com.yksogeid.gestmon.utils.SessionManager
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var sessionManager: SessionManager
     private lateinit var nombreUsuario: TextView
     private lateinit var cardVerMonitores: CardView
     private lateinit var cardHistorialMonitorias: CardView
@@ -27,6 +28,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Initialize SessionManager
+        sessionManager = SessionManager(this)
+
+        // Check if user is logged in
+        if (!sessionManager.isLoggedIn()) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
+        // Check if user role is student
+        if (sessionManager.getRol() != "Estudiante") {
+            sessionManager.clearSession()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
+        // Continue with normal MainActivity flow for students
         // Inicializar vistas
         drawerLayout = findViewById(R.id.drawerLayout)
         navigationView = findViewById(R.id.navigationView)
@@ -37,10 +57,10 @@ class MainActivity : AppCompatActivity() {
         cardHistorial = findViewById(R.id.cardHistorial)
         cardTipsEstudio = findViewById(R.id.cardTipsEstudio)
 
-        // Obtener datos del intent
-        val nombre = intent.getStringExtra("nombre") ?: "Usuario"
-        val apellido = intent.getStringExtra("apellido") ?: ""
-        val rol = intent.getStringExtra("rol") ?: "default"
+        // Get user data from SessionManager
+        val nombre = sessionManager.getNombre() ?: "Usuario"
+        val apellido = sessionManager.getApellido() ?: ""
+        val rol = sessionManager.getRol() ?: "default"
         val nombreCompleto = "$nombre $apellido"
 
         // Verificar datos en Logcat
@@ -50,16 +70,40 @@ class MainActivity : AppCompatActivity() {
         when (rol) {
             "Administrador" -> {
                 val intent = Intent(this, AdminActivity::class.java).apply {
-                    putExtra("nombre", nombre)
-                    putExtra("apellido", apellido)
-                    putExtra("rol", rol)
+                    putExtra("token", sessionManager.getToken())
+                    putExtra("userId", sessionManager.getUserId())
                 }
                 startActivity(intent)
                 finish()
                 return
             }
             "Estudiante Monitor" -> {
-                startActivity(Intent(this, MonitorActivty::class.java))
+                val intent = Intent(this, MonitorActivity::class.java).apply {
+                    putExtra("token", sessionManager.getToken())
+                    putExtra("userId", sessionManager.getUserId())
+                }
+                startActivity(intent)
+                finish()
+                return
+            }
+            "Docente" -> {
+                val intent = Intent(this, TeacherActivity::class.java).apply {
+                    putExtra("token", sessionManager.getToken())
+                    putExtra("userId", sessionManager.getUserId())
+                }
+                startActivity(intent)
+                finish()
+                return
+            }
+            "Estudiante" -> {
+                // Stay in MainActivity as it's the default view for students
+                // Continue with the normal flow
+            }
+            else -> {
+                // Handle unknown role
+                Toast.makeText(this, "Rol no reconocido", Toast.LENGTH_SHORT).show()
+                sessionManager.clearSession()
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
                 return
             }
@@ -96,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_logout -> {
-                    Log.d("MainActivity", "Cerrar sesión seleccionado")
+                    sessionManager.clearSession()
                     startActivity(Intent(this, LoginActivity::class.java))
                     Toast.makeText(this, "Has cerrado sesión", Toast.LENGTH_SHORT).show()
                     finish()
