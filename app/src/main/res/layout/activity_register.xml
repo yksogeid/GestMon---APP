@@ -8,127 +8,124 @@
     android:background="@color/colorPrimary"
     tools:context=".RegisterActivity">
 
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="40dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_gestmon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etNombre"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_edittext"
-        android:drawableStart="@drawable/ic_user"
-        android:hint="Nombre"
-        android:inputType="text"
-        android:paddingStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-    <EditText
-        android:id="@+id/etApellido"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_edittext"
-        android:drawableStart="@drawable/ic_user"
-        android:hint="Apellido"
-        android:inputType="text"
-        android:paddingStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etNombre" />
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_gestmon" />
 
-    <EditText
-        android:id="@+id/etCorreo"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_edittext"
-        android:drawableStart="@drawable/ic_email"
-        android:hint="Correo Electrónico"
-        android:inputType="textEmailAddress"
-        android:paddingStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etApellido" />
+            <Spinner
+                android:id="@+id/spTipoDocumento"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_edittext"
+                android:entries="@array/tipo_documento" />
 
-    <EditText
-        android:id="@+id/etUsuario"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_edittext"
-        android:drawableStart="@drawable/ic_user"
-        android:hint="Usuario"
-        android:inputType="text"
-        android:paddingStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etCorreo" />
+            <EditText
+                android:id="@+id/etNumeroDocumento"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_edittext"
+                android:drawableStart="@drawable/ic_document"
+                android:hint="Número de Documento"
+                android:inputType="number"
+                android:maxLength="8"
+                android:paddingStart="16dp" />
 
-    <EditText
-        android:id="@+id/etClave"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_edittext"
-        android:drawableStart="@drawable/ic_lock"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:paddingStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUsuario" />
+            <EditText
+                android:id="@+id/etNombres"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_edittext"
+                android:drawableStart="@drawable/ic_user"
+                android:hint="Nombres"
+                android:inputType="textPersonName"
+                android:paddingStart="16dp" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_button"
-        android:drawableStart="@drawable/ic_register"
-        android:text="Registrarse"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etClave" />
+            <EditText
+                android:id="@+id/etApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_edittext"
+                android:drawableStart="@drawable/ic_user"
+                android:hint="Apellidos"
+                android:inputType="textPersonName"
+                android:paddingStart="16dp" />
 
-    <TextView
-        android:id="@+id/tvLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¿Ya tienes cuenta? Inicia sesión"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingVertical="12dp"
-        android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/btnRegister"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_edittext"
+                android:drawableStart="@drawable/ic_email"
+                android:hint="Correo Electrónico"
+                android:inputType="textEmailAddress"
+                android:paddingStart="16dp" />
 
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_edittext"
+                android:drawableStart="@drawable/ic_user"
+                android:hint="Nombre de Usuario"
+                android:inputType="text"
+                android:paddingStart="16dp" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_edittext"
+                android:drawableStart="@drawable/ic_lock"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:paddingStart="16dp" />
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_button"
+                android:text="Registrarse"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="48dp"
+                android:paddingVertical="12dp"
+                android:text="¿Ya tienes cuenta? Inicia sesión"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

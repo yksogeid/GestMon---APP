@@ -30,7 +30,12 @@
         <!-- MainActivity sin intent-filter para que no inicie sola -->
         <activity android:name=".MainActivity" />
         <activity android:name=".AdminActivity" />
-        <activity android:name=".MonitorActivty" />
+        <activity
+            android:name=".MonitorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherActivity"
+            android:exported="false" />
         <activity android:name=".RegisterActivity" />
 
 

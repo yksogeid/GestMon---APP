@@ -18,7 +18,7 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-        <!-- Add your monitor-specific content here -->
+        <!-- Add your teacher-specific content here -->
 
     </LinearLayout>
 
