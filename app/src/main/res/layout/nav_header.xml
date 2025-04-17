@@ -1,32 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:background="@color/colorSantiago"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:gravity="bottom"
     android:padding="16dp">
 
+    <!-- Header with green background -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSantiago"
+        android:orientation="horizontal"
+        android:padding="16dp">
+        
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_gestmon"
+            android:contentDescription="Back button"/>
+            
+        <TextView
+            android:id="@+id/carrera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Carrera"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Profile Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+        <!-- Replace CircleImageView with regular ImageView -->
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_gestmon"
+            android:background="@drawable/circle_background"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Profile picture"/>
+
+        <TextView
+            android:id="@+id/usuarioNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Juan Diego"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/rolUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingeniería de Sistemas"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="24dp"/>
+    </LinearLayout>
+
+    <!-- Menu Buttons -->
+    <Button
+        android:id="@+id/nav_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Configuración"
+        android:drawableStart="@drawable/ic_settings"
+        android:drawablePadding="8dp"
+        android:background="@drawable/mint_button_background"
+        android:textColor="@color/black"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/nav_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Actualizar Datos"
+        android:drawableStart="@drawable/ic_edit"
+        android:drawablePadding="8dp"
+        android:background="@drawable/mint_button_background"
+        android:textColor="@color/black"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/nav_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notificaciones"
+        android:drawableStart="@drawable/ic_notifications"
+        android:drawablePadding="8dp"
+        android:background="@drawable/mint_button_background"
+        android:textColor="@color/black"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/nav_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        android:drawableStart="@drawable/ic_logout"
+        android:drawablePadding="8dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/ic_gestmon"
-        android:contentDescription="Logo de la app"/>
-
-    <TextView
-        android:id="@+id/usuarioNombre"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre de Usuario"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:layout_marginTop="8dp"/>
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:contentDescription="Logo Universidad Simon Bolivar"
+        android:src="@drawable/logo_usb" />
 
-    <TextView
-        android:id="@+id/rolUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="usuario@example.com"
-        android:textSize="14sp"
-        android:textColor="@color/white"/>
 </LinearLayout>

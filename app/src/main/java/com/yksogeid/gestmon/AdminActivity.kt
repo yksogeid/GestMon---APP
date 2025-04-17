@@ -72,18 +72,22 @@ class AdminActivity : AppCompatActivity() {
         val apellido = sessionManager.getApellido() ?: ""
         val rol = sessionManager.getRol() ?: "default"
         val nombreCompleto = "$nombre $apellido"
-
         // Verificar datos en Logcat
         Log.d("MainActivity", "Nombre: $nombreCompleto, Rol: $rol")
 // Obtener la vista del header del NavigationView
         val headerView = navigationView.getHeaderView(0)
         val usuarioNombre = headerView.findViewById<TextView>(R.id.usuarioNombre)
         val rolUsuario = headerView.findViewById<TextView>(R.id.rolUsuario)
+        val carrera = headerView.findViewById<TextView>(R.id.carrera)
+
+        // Get career from SessionManager
+        val carreraNombre = sessionManager.getCarrera() ?: "Sin carrera"
 
         // Establecer textos
         nombreUsuario.text = nombreCompleto
         usuarioNombre?.text = nombreCompleto
         rolUsuario?.text = rol
+        carrera?.text = carreraNombre
         nombreUsuario.text = "$nombre $apellido"
     }
 

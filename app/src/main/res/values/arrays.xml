@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="tipo_documento">
-        <item>DNI</item>
+        <item>CC</item>
         <item>CE</item>
-        <item>Pasaporte</item>
+        <item>TI</item>
+        <item>PASS</item>
     </string-array>
 </resources>

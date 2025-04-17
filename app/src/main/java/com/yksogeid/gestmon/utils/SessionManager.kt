@@ -18,6 +18,7 @@ class SessionManager(context: Context) {
         const val KEY_USERNAME = "username"
         const val KEY_USER_ID = "userId"
         const val IS_LOGIN = "isLoggedIn"
+        const val KEY_CARRERA = "carrera"
     }
 
     fun saveAuthToken(token: String) {
@@ -32,7 +33,8 @@ class SessionManager(context: Context) {
         email: String,
         rol: String,
         username: String,
-        userId: Int
+        userId: Int,
+        carrera: String = "Sin carrera" // Optional parameter with default value
     ) {
         editor.putString(KEY_TOKEN_TYPE, tokenType)
         editor.putString(KEY_NOMBRE, nombre)
@@ -41,6 +43,7 @@ class SessionManager(context: Context) {
         editor.putString(KEY_ROL, rol)
         editor.putString(KEY_USERNAME, username)
         editor.putInt(KEY_USER_ID, userId)
+        editor.putString(KEY_CARRERA, carrera)
         editor.putBoolean(IS_LOGIN, true)
         editor.apply()
     }
@@ -71,6 +74,10 @@ class SessionManager(context: Context) {
 
     fun getRol(): String? {
         return prefs.getString(KEY_ROL, null)
+    }
+    
+    fun getCarrera(): String? {
+        return prefs.getString(KEY_CARRERA, null)
     }
 
     fun isLoggedIn(): Boolean {

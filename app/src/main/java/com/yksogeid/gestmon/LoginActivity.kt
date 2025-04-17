@@ -162,6 +162,7 @@ class LoginActivity : AppCompatActivity() {
                         
                         // Save session data
                         sessionManager.saveAuthToken(loginResponse.access_token)
+                        // Save session data
                         sessionManager.saveUserData(
                             loginResponse.token_type,
                             loginResponse.user.persona.nombres,
@@ -169,7 +170,8 @@ class LoginActivity : AppCompatActivity() {
                             loginResponse.user.persona.email,
                             loginResponse.user.roles.firstOrNull()?.nombre ?: "Sin rol",
                             loginResponse.user.username,
-                            loginResponse.user.id
+                            loginResponse.user.id,
+                            loginResponse.user.carreras?.firstOrNull()?.nombre ?: "Sin carrera"
                         )
 
                         // Redirect based on role
