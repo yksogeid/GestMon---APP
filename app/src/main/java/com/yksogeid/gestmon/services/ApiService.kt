@@ -57,4 +57,7 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("usuario/register")
     fun registerUser(@Body user: RegisterRequest): Call<ApiResponse>
+
+    @POST("/api/personas")
+    fun register(@Body registerRequest: HashMap<String, Any>): Call<Any>
 }
