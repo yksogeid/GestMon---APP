@@ -1,17 +1,23 @@
-package com.yksogeid.gestmon
+package com.yksogeid.gestmon.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.yksogeid.gestmon.R
 
-class VerMonitoresFragment : Fragment() {
+class PQRSFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_ver_monitores, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_pqrs, container, false)
+    }
+
+    companion object {
+        fun newInstance() = PQRSFragment()
     }
 }

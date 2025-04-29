@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Check if user is already logged in
         if (sessionManager.isLoggedIn()) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, EstudianteActivity::class.java))
             finish()
         }
 
@@ -182,11 +182,8 @@ class LoginActivity : AppCompatActivity() {
                             "Estudiante Monitor" -> {
                                 startActivity(Intent(this@LoginActivity, MonitorActivity::class.java))
                             }
-                            "Docente" -> {
-                                startActivity(Intent(this@LoginActivity, TeacherActivity::class.java))
-                            }
                             "Estudiante" -> {
-                                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                startActivity(Intent(this@LoginActivity, EstudianteActivity::class.java))
                             }
                             else -> {
                                 Toast.makeText(this@LoginActivity, "Rol no reconocido", Toast.LENGTH_SHORT).show()

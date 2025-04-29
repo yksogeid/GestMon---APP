@@ -28,7 +28,7 @@
         </activity>
 
         <!-- MainActivity sin intent-filter para que no inicie sola -->
-        <activity android:name=".MainActivity" />
+        <activity android:name=".EstudianteActivity" />
         <activity android:name=".AdminActivity" />
         <activity
             android:name=".MonitorActivity"

@@ -98,10 +98,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Registrar Monitoria"
+                        android:text="Ver Monitores"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(12 Monitores)"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -133,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Tu agenda"
+                        android:text="Historial Monitorias"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -201,10 +207,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Solicitudes"
+                        android:text="Tips de Estudio"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(500 ITEMS)"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -265,13 +277,20 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Navigation Drawer -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
+    <!-- Your main content layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"
-        android:background="@color/lavender"/>
+        android:orientation="vertical">
+        <!-- ... main content ... -->
+    </LinearLayout>
+
+    <!-- Replace NavigationView with direct include -->
+    <include
+        android:id="@+id/nav_header"
+        layout="@layout/nav_header"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

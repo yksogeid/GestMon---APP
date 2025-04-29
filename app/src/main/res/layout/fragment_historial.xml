@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- fragment_historial.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,11 +7,11 @@
     android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/tvTitleMonitores"
+        android:id="@+id/tvTitleHistorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Monitores Disponibles"
+        android:text="Historial General"
         android:textColor="#4CAF50"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -19,19 +20,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvSubtitleMonitores"
+        android:id="@+id/tvSubtitleHistorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Encuentra un monitor para tus asignaturas"
+        android:text="Actividades y eventos recientes"
         android:textColor="#757575"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleMonitores" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleHistorial" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMonitores"
+        android:id="@+id/recyclerViewHistorial"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -39,6 +40,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubtitleMonitores" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtitleHistorial" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

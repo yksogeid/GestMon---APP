@@ -12,26 +12,41 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import com.yksogeid.gestmon.fragments.*
 import com.yksogeid.gestmon.services.RetrofitClient
 import com.yksogeid.gestmon.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class EstudianteActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     private lateinit var nombreUsuario: TextView
     private lateinit var cardVerMonitores: CardView
     private lateinit var cardHistorialMonitorias: CardView
     private lateinit var cardHistorial: CardView
     private lateinit var cardTipsEstudio: CardView
-    // Replace NavigationView references with direct view access
+    private lateinit var cardPQRS: CardView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
-    
+    private lateinit var gridLayout: View
+    private lateinit var fragmentContainer: View
+
+    // Current active fragment
+    private var activeFragment: Fragment? = null
+    private var currentFragmentTag: String? = null
+
+    // Fragment tags
+    private val TAG_MONITORES = "monitores_fragment"
+    private val TAG_HISTORIAL_MONITORIAS = "historial_monitorias_fragment"
+    private val TAG_HISTORIAL = "historial_fragment"
+    private val TAG_TIPS = "tips_fragment"
+    private val TAG_PQRS = "pqrs_fragment"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_estudiante)
 
         // Initialize SessionManager
         sessionManager = SessionManager(this)
@@ -53,15 +68,16 @@ class MainActivity : AppCompatActivity() {
 
         // Continue with normal MainActivity flow for students
         // Inicializar vistas
-        // Update view initialization
         drawerLayout = findViewById(R.id.drawerLayout)
-        // Remove this line: navigationView = findViewById(R.id.navigationView)
         toolbar = findViewById(R.id.toolbar)
         nombreUsuario = findViewById(R.id.tvNombreUsuario)
         cardVerMonitores = findViewById(R.id.cardVerMonitores)
         cardHistorialMonitorias = findViewById(R.id.cardHistorialMonitorias)
         cardHistorial = findViewById(R.id.cardHistorial)
         cardTipsEstudio = findViewById(R.id.cardTipsEstudio)
+        cardPQRS = findViewById(R.id.cardPQRS)
+        gridLayout = findViewById(R.id.gridLayout)
+        fragmentContainer = findViewById(R.id.fragmentContainer)
 
         // Get user data from SessionManager
         val nombre = sessionManager.getNombre() ?: "Usuario"
@@ -70,12 +86,10 @@ class MainActivity : AppCompatActivity() {
         val nombreCompleto = "$nombre $apellido"
         val carreraNombre = sessionManager.getCarrera() ?: "Sin carrera"
 
-
         // Verificar datos en Logcat
         Log.d("MainActivity", "Nombre: $nombreCompleto, Rol: $rol, Carrera: $carreraNombre")
 
-
-            // Redirigir según el rol
+        // Redirigir según el rol
         when (rol) {
             "Administrador" -> {
                 val intent = Intent(this, AdminActivity::class.java).apply {
@@ -88,15 +102,6 @@ class MainActivity : AppCompatActivity() {
             }
             "Estudiante Monitor" -> {
                 val intent = Intent(this, MonitorActivity::class.java).apply {
-                    putExtra("token", sessionManager.getToken())
-                    putExtra("userId", sessionManager.getUserId())
-                }
-                startActivity(intent)
-                finish()
-                return
-            }
-            "Docente" -> {
-                val intent = Intent(this, TeacherActivity::class.java).apply {
                     putExtra("token", sessionManager.getToken())
                     putExtra("userId", sessionManager.getUserId())
                 }
@@ -124,14 +129,11 @@ class MainActivity : AppCompatActivity() {
         val rolUsuario = headerView.findViewById<TextView>(R.id.rolUsuario)
         val carrera = headerView.findViewById<TextView>(R.id.carrera)
 
-
         // Establecer textos
         nombreUsuario.text = nombreCompleto
         usuarioNombre?.text = nombreCompleto
         rolUsuario?.text = rol
         carrera?.text = carreraNombre
-
-
 
         // Configurar Toolbar
         setSupportActionBar(toolbar)
@@ -143,12 +145,12 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "Configuración seleccionada")
             drawerLayout.closeDrawer(GravityCompat.START)
         }
-        
+
         headerView.findViewById<View>(R.id.nav_update).setOnClickListener {
             Log.d("MainActivity", "Actualizar Datos seleccionado")
             drawerLayout.closeDrawer(GravityCompat.START)
         }
-        
+
         headerView.findViewById<View>(R.id.nav_notifications).setOnClickListener {
             Log.d("MainActivity", "Notificaciones seleccionadas")
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -157,29 +159,29 @@ class MainActivity : AppCompatActivity() {
         headerView.findViewById<View>(R.id.nav_logout).setOnClickListener {
             val token = sessionManager.getToken()
             val bearerToken = "Bearer $token"
-            
+
             // Log the API request
             Log.d("LogoutAPI", "Calling logout endpoint with token: $bearerToken")
-            
+
             RetrofitClient.apiService.logout(bearerToken).enqueue(object : Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
                     // Log the API response
                     Log.d("LogoutAPI", "Response Code: ${response.code()}")
                     Log.d("LogoutAPI", "Response Body: ${response.body()}")
                     Log.d("LogoutAPI", "Request URL: ${call.request().url()}")
-                    
+
                     if (response.isSuccessful) {
                         val message = "Sesión cerrada exitosamente"
                         Log.d("LogoutAPI", "Success: $message")
                         sessionManager.clearSession()
-                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@EstudianteActivity, LoginActivity::class.java))
+                        Toast.makeText(this@EstudianteActivity, message, Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
                         val errorBody = response.errorBody()?.string()
                         Log.e("LogoutAPI", "Error Response: $errorBody")
                         Toast.makeText(
-                            this@MainActivity,
+                            this@EstudianteActivity,
                             "Error al cerrar sesión. Intente nuevamente.",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -190,7 +192,7 @@ class MainActivity : AppCompatActivity() {
                     Log.e("LogoutAPI", "Network Error: ${t.message}")
                     Log.e("LogoutAPI", "Failed Request: ${call.request().url()}")
                     Toast.makeText(
-                        this@MainActivity,
+                        this@EstudianteActivity,
                         "Error de conexión al cerrar sesión",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -198,8 +200,88 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        // Setup card click listeners
+        setupCardClickListeners()
+
         // Aplicar animaciones
         aplicarAnimaciones()
+    }
+
+    private fun setupCardClickListeners() {
+        // Ver Monitores Card
+        cardVerMonitores.setOnClickListener {
+            loadFragment(VerMonitoresFragment.newInstance(), TAG_MONITORES)
+        }
+
+        // Historial Monitorias Card
+        cardHistorialMonitorias.setOnClickListener {
+            loadFragment(HistorialMonitoriasFragment.newInstance(), TAG_HISTORIAL_MONITORIAS)
+        }
+
+        // Historial Card
+        cardHistorial.setOnClickListener {
+            loadFragment(HistorialFragment.newInstance(), TAG_HISTORIAL)
+        }
+
+        // Tips Estudio Card
+        cardTipsEstudio.setOnClickListener {
+            loadFragment(TipsEstudioFragment.newInstance(), TAG_TIPS)
+        }
+
+        // PQRS Card
+        cardPQRS.setOnClickListener {
+            loadFragment(PQRSFragment.newInstance(), TAG_PQRS)
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment, tag: String) {
+        // Show fragment container and hide grid layout
+        fragmentContainer.visibility = View.VISIBLE
+        gridLayout.visibility = View.GONE
+
+        // Add back button to toolbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back) // Make sure you have this drawable
+
+        // Update current fragment reference
+        activeFragment = fragment
+        currentFragmentTag = tag
+
+        // Begin the transaction
+        val transaction = supportFragmentManager.beginTransaction()
+
+        // Use animation for transition
+        transaction.setCustomAnimations(
+            R.anim.slide_in_right,  // Enter animation
+            R.anim.slide_out_left,  // Exit animation
+            R.anim.slide_in_left,   // Pop enter animation
+            R.anim.slide_out_right  // Pop exit animation
+        )
+
+        // Replace whatever is in the fragment container with this fragment
+        transaction.replace(R.id.fragmentContainer, fragment, tag)
+
+        // Add to back stack so user can navigate back
+        transaction.addToBackStack(tag)
+
+        // Commit the transaction
+        transaction.commit()
+    }
+
+    private fun returnToMainGrid() {
+        // Hide fragment container and show grid layout
+        fragmentContainer.visibility = View.GONE
+        gridLayout.visibility = View.VISIBLE
+
+        // Reset toolbar icon to menu
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+        // Clear the active fragment reference
+        activeFragment = null
+        currentFragmentTag = null
+
+        // Clear back stack
+        supportFragmentManager.popBackStack()
     }
 
     private fun aplicarAnimaciones() {
@@ -211,11 +293,15 @@ class MainActivity : AppCompatActivity() {
         cardHistorialMonitorias.startAnimation(slideUpAnimation)
         cardHistorial.startAnimation(slideUpAnimation)
         cardTipsEstudio.startAnimation(slideUpAnimation)
+        cardPQRS.startAnimation(slideUpAnimation)
     }
 
-    // Update these methods to work without NavigationView
+    // Update these methods to work with fragments
     override fun onSupportNavigateUp(): Boolean {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (activeFragment != null) {
+            returnToMainGrid()
+            return true
+        } else if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             drawerLayout.openDrawer(GravityCompat.START)
@@ -224,7 +310,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (activeFragment != null) {
+            returnToMainGrid()
+        } else if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
