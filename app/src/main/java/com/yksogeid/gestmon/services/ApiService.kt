@@ -65,6 +65,14 @@ data class CarreraResponse(
     val updated_at: String
 )
 
+// Add this data class with the existing data classes
+data class MateriaResponse(
+    val idmateria: Int,
+    val nombre: String,
+    val created_at: String,
+    val updated_at: String
+)
+
 interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("/api/login")
@@ -83,4 +91,7 @@ interface ApiService {
     // Add this endpoint to your existing ApiService interface
     @GET("api/carreras")
     fun getCarreras(): Call<List<CarreraResponse>>
+
+    @GET("api/materias")
+    fun getMaterias(): Call<List<MateriaResponse>>
 }
