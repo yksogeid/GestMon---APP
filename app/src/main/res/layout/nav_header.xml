@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">  <!-- Reduced padding from 16dp to 8dp -->
 
     <!-- Header with green background -->
     <LinearLayout
@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:background="@color/colorSantiago"
         android:orientation="horizontal"
-        android:padding="16dp">
-        
+        android:padding="12dp">  <!-- Adjusted padding -->
+
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_gestmon"
             android:contentDescription="Back button"/>
-            
+
         <TextView
             android:id="@+id/carrera"
             android:layout_width="wrap_content"

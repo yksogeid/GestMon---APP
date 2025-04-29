@@ -289,7 +289,7 @@
     <include
         android:id="@+id/nav_header"
         layout="@layout/nav_header"
-        android:layout_width="280dp"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"/>
 
