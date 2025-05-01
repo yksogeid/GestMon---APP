@@ -1,5 +1,6 @@
 package com.yksogeid.gestmon.services
 
+import com.yksogeid.gestmon.models.Monitor
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -94,4 +95,7 @@ interface ApiService {
 
     @GET("api/materias")
     fun getMaterias(): Call<List<MateriaResponse>>
+
+    @GET("api/persona-materias")
+    fun getMonitores(): Call<List<Monitor>>
 }
