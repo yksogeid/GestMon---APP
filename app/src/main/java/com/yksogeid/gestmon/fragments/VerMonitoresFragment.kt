@@ -53,33 +53,45 @@ class VerMonitoresFragment : Fragment() {
         }
     }
 
+    private var allMonitores: List<Monitor> = emptyList()
+
     private fun fetchMonitores() {
         RetrofitClient.apiService.getMonitores().enqueue(object : Callback<List<Monitor>> {
+            override fun onResponse(call: Call<List<Monitor>>, response: Response<List<Monitor>>) {
+                if (response.isSuccessful) {
+                    allMonitores = response.body() ?: emptyList()
+                    activity?.runOnUiThread {
+                        monitorAdapter.setData(allMonitores)
+                    }
+                }
+            }
             override fun onFailure(call: Call<List<Monitor>>, t: Throwable) {
                 activity?.runOnUiThread {
                     Toast.makeText(context, "Error al cargar monitores", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onResponse(call: Call<List<Monitor>>, response: Response<List<Monitor>>) {
-                if (response.isSuccessful) {
-                    val monitores = response.body() ?: emptyList()
-                    activity?.runOnUiThread {
-                        monitorAdapter.setData(monitores)
-                    }
                 }
             }
         })
     }
 
     private fun performSearch() {
-        val nombreBusqueda = view?.findViewById<EditText>(R.id.etNombre)?.text.toString()
+        val nombreBusqueda = view?.findViewById<EditText>(R.id.etNombre)?.text.toString().lowercase()
         val materiaSeleccionada = if (spinnerMateria.selectedItemPosition > 0) {
             materiasList[spinnerMateria.selectedItemPosition - 1]
         } else null
 
-        // Implement search logic here
-        // You can filter the monitors based on nombre and materia
+        val filteredMonitores = allMonitores.filter { monitor ->
+            val matchesNombre = if (nombreBusqueda.isNotEmpty()) {
+                monitor.nombre.lowercase().contains(nombreBusqueda)
+            } else true
+
+            val matchesMateria = if (materiaSeleccionada != null) {
+                monitor.materias.any { it.nombre == materiaSeleccionada.nombre }
+            } else true
+
+            matchesNombre && matchesMateria
+        }
+
+        monitorAdapter.setData(filteredMonitores)
     }
 
     private fun fetchMaterias() {
