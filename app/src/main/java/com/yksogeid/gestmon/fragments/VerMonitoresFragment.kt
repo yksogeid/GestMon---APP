@@ -2,6 +2,7 @@ package com.yksogeid.gestmon.fragments
 
 import com.yksogeid.gestmon.models.Monitor
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,18 +75,24 @@ class VerMonitoresFragment : Fragment() {
     }
 
     private fun performSearch() {
-        val nombreBusqueda = view?.findViewById<EditText>(R.id.etNombre)?.text.toString().lowercase()
-        val materiaSeleccionada = if (spinnerMateria.selectedItemPosition > 0) {
-            materiasList[spinnerMateria.selectedItemPosition - 1]
-        } else null
+        val nombreBusqueda = view?.findViewById<EditText>(R.id.etNombre)?.text.toString().trim().lowercase()
+        val materiaSeleccionada = materiasList[spinnerMateria.selectedItemPosition]
+
+        // Log de búsqueda
+        Log.d("FiltroBusqueda", "Nombre buscado: '$nombreBusqueda'")
+        Log.d("FiltroBusqueda", "Materia seleccionada: '${materiaSeleccionada.nombre}'")
 
         val filteredMonitores = allMonitores.filter { monitor ->
+            Log.d("FiltroMonitor", "Revisando monitor: ${monitor.nombre} - Materias: ${monitor.materias.map { it.nombre }}")
+
             val matchesNombre = if (nombreBusqueda.isNotEmpty()) {
-                monitor.nombre.lowercase().contains(nombreBusqueda)
+                monitor.nombre.trim().lowercase().contains(nombreBusqueda)
             } else true
 
-            val matchesMateria = if (materiaSeleccionada != null) {
-                monitor.materias.any { it.nombre == materiaSeleccionada.nombre }
+            val matchesMateria = if (materiaSeleccionada.nombre != "Todas las materias") {
+                monitor.materias.any {
+                    it.nombre.trim().lowercase() == materiaSeleccionada.nombre.trim().lowercase()
+                }
             } else true
 
             matchesNombre && matchesMateria
@@ -93,6 +100,7 @@ class VerMonitoresFragment : Fragment() {
 
         monitorAdapter.setData(filteredMonitores)
     }
+
 
     private fun fetchMaterias() {
         RetrofitClient.apiService.getMaterias().enqueue(object : Callback<List<MateriaResponse>> {
@@ -117,23 +125,24 @@ class VerMonitoresFragment : Fragment() {
     }
 
     private fun setupSpinner() {
+        // Crear un objeto MateriaResponse para "Todas las materias"
+        val todasLasMaterias = MateriaResponse(idmateria = 0, nombre = "Todas las materias", created_at = "", updated_at = "")
+
+        // Crear una nueva lista con la opción "Todas las materias" al inicio
+        val listaConTodas = listOf(todasLasMaterias) + materiasList
+
+        // Asignar la lista con "Todas las materias"
+        materiasList = listaConTodas
+
+        // Adaptar los nombres de las materias para el spinner
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             materiasList.map { it.nombre }
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        
-        spinnerMateria.adapter = adapter
-        
-        spinnerMateria.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedMateria = materiasList[position]
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
+        spinnerMateria.adapter = adapter
     }
 
     companion object {
