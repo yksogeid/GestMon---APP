@@ -23,6 +23,7 @@
             android:textColor="@android:color/white"/>
 
         <TextView
+            android:id="@+id/carreraMonitor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ingeniería de Sistemas"

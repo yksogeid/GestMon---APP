@@ -32,10 +32,12 @@ class MonitorAdapter : RecyclerView.Adapter<MonitorAdapter.MonitorViewHolder>() 
 
     class MonitorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvNombreMonitor: TextView = itemView.findViewById(R.id.tvNombreMonitor)
+        private val carreraMonitor: TextView = itemView.findViewById(R.id.carreraMonitor)
         private val chipGroupMaterias: ChipGroup = itemView.findViewById(R.id.chipGroupMaterias)
 
         fun bind(monitor: Monitor) {
             tvNombreMonitor.text = monitor.nombre
+            carreraMonitor.text = monitor.carrera
             chipGroupMaterias.removeAllViews()
             
             monitor.materias.forEach { materia ->
