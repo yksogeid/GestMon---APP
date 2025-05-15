@@ -4,4 +4,6 @@
     <string name="ver_monitores_icon">Ver monitores</string>
     <string name="agendar_monitoria_icon">Agendar nueva monitoria</string>
     <string name="menu_button">Abrir menú de navegación</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

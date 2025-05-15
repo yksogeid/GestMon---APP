@@ -44,6 +44,8 @@ class EstudianteActivity : AppCompatActivity() {
     private val TAG_TIPS = "tips_fragment"
     private val TAG_PQRS = "pqrs_fragment"
 
+    private val TAG_OPTIONS = "optionsFragment"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_estudiante)
@@ -124,7 +126,7 @@ class EstudianteActivity : AppCompatActivity() {
         }
 
         // Obtener la vista del header del NavigationView
-        val headerView = findViewById<View>(R.id.nav_header)
+        val headerView = findViewById<View>(R.id.optionsFragment)
         val usuarioNombre = headerView.findViewById<TextView>(R.id.usuarioNombre)
         val rolUsuario = headerView.findViewById<TextView>(R.id.rolUsuario)
         val carrera = headerView.findViewById<TextView>(R.id.carrera)

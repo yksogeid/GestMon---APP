@@ -20,4 +20,4 @@ class HistorialFragment : Fragment() {
     companion object {
         fun newInstance() = HistorialFragment()
     }
-}
+} 

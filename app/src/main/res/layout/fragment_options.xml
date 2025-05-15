@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Encabezado verde con flecha y título centrado -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4CAF50"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Flecha de retroceso -->
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                android:contentDescription="Volver"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- Título centrado -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estudiante"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <!-- Imagen del usuario -->
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_gestmon"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/circle_background"
+            android:scaleType="centerInside" />
+
+        <!-- Nombre del estudiante -->
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Juan Diego"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <!-- Carrera -->
+        <TextView
+            android:id="@+id/tvCarrera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingeniería de Sistemas"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Botón: Configuración -->
+        <Button
+            android:id="@+id/nav_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚙ Configuración"
+            android:backgroundTint="#A1E9DD"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Botón: Actualizar datos -->
+        <Button
+            android:id="@+id/nav_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✏️ Actualizar Datos"
+            android:backgroundTint="#A1E9DD"
+            android:textColor="#000000"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Botón: Notificaciones -->
+        <Button
+            android:id="@+id/nav_notifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔔 Notificaciones"
+            android:backgroundTint="#A1E9DD"
+            android:textColor="#000000"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Botón: Cerrar sesión -->
+        <Button
+            android:id="@+id/nav_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏻ Cerrar Sesión"
+            android:textColor="#000000"
+            android:backgroundTint="#FFFFFF"
+            android:elevation="2dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Logo Universidad -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:src="@drawable/logo_usb"
+            android:contentDescription="Logo Universidad Simón Bolívar" />
+
+    </LinearLayout>
+</ScrollView>

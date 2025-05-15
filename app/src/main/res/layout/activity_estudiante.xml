@@ -313,8 +313,8 @@
 
     <!-- Replace NavigationView with direct include -->
     <include
-        android:id="@+id/nav_header"
-        layout="@layout/nav_header"
+        android:id="@+id/optionsFragment"
+        layout="@layout/fragment_options"
         android:layout_width="350dp"
         android:layout_height="match_parent"
         android:layout_gravity="start" />
