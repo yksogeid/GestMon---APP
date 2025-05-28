@@ -31,7 +31,7 @@ class MonitorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_estudiante)
+        setContentView(R.layout.activity_monitor)
 
         // Initialize SessionManager
         sessionManager = SessionManager(this)
@@ -75,39 +75,7 @@ class MonitorActivity : AppCompatActivity() {
         Log.d("MonitorActivity", "Nombre: $nombreCompleto, Rol: $rol, Carrera: $carreraNombre")
 
 
-        // Redirigir según el rol
-        when (rol) {
-            "Administrador" -> {
-                val intent = Intent(this, AdminActivity::class.java).apply {
-                    putExtra("token", sessionManager.getToken())
-                    putExtra("userId", sessionManager.getUserId())
-                }
-                startActivity(intent)
-                finish()
-                return
-            }
-            "Estudiante" -> {
-                val intent = Intent(this, EstudianteActivity::class.java).apply {
-                    putExtra("token", sessionManager.getToken())
-                    putExtra("userId", sessionManager.getUserId())
-                }
-                startActivity(intent)
-                finish()
-                return
-            }
-            "Estudiante Monitor" -> {
-                // Stay in MonitorActivity as it's the default view for students
-                // Continue with the normal flow
-            }
-            else -> {
-                // Handle unknown role
-                Toast.makeText(this, "Rol no reconocido", Toast.LENGTH_SHORT).show()
-                sessionManager.clearSession()
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-                return
-            }
-        }
+  
 
         // Obtener la vista del header del NavigationView
         val headerView = findViewById<View>(R.id.nav_header)

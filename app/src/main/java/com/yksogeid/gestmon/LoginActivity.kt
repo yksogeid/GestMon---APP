@@ -175,6 +175,7 @@ class LoginActivity : AppCompatActivity() {
                         )
 
                         // Redirect based on role
+                        Log.d("REDIRECCION", "${loginResponse.user.roles.firstOrNull()?.nombre}")
                         when (loginResponse.user.roles.firstOrNull()?.nombre) {
                             "Administrador" -> {
                                 startActivity(Intent(this@LoginActivity, AdminActivity::class.java))

@@ -82,8 +82,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun validateFields(): Boolean {
-        if (etNumeroDocumento.text.toString().length != 8) {
-            Toast.makeText(this, "El número de documento debe tener 8 dígitos", Toast.LENGTH_SHORT).show()
+        if (etNumeroDocumento.text.toString().isEmpty()) {
+            Toast.makeText(this, "Por favor, ingrese un número de documento", Toast.LENGTH_SHORT).show()
             return false
         }
         if (etUsername.text.toString().length != 12) {
